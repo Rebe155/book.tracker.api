@@ -18,6 +18,6 @@ app.use(limiter);
 
 app.get("/", (req, res) => res.send("Bienvenido a la API de libros"));
 
-app.use("/api", routes);
+app.use("/api", routes); // todas las rutas están bajo /api
 
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
