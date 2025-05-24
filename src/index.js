@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
-const routes = require("./routes/routes");
+const routes = require("./src/routes/routes"); // corregido el require
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +17,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 app.get("/", (req, res) => res.send("Bienvenido a la API de libros"));
+
 app.use("/api", routes);
 
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
