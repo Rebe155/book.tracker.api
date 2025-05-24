@@ -14,12 +14,26 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
   const { email, password } = req.body;
   User.findByEmail(email, (err, results) => {
-    if (err || results.length === 0) return res.status(404).send({ message: "Usuario no encontrado" });
+    if (err) {
+      console.error("Error en DB:", err);
+      return res.status(500).send({ status: "error", message: "Error interno del servidor" });
+    }
+    if (!results || results.length === 0) {
+      return res.status(404).send({ status: "error", message: "Usuario no encontrado" });
+    }
     const user = results[0];
     const passwordIsValid = bcrypt.compareSync(password, user.password);
-    if (!passwordIsValid) return res.status(401).send({ message: "Contraseña inválida" });
+    if (!passwordIsValid) {
+      return res.status(401).send({ status: "error", message: "Contraseña inválida" });
+    }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 86400 });
-    res.send({ token });
+    try {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 86400 });
+      res.send({ token });
+    } catch (error) {
+      console.error("Error generando token JWT:", error);
+      res.status(500).send({ status: "error", message: "Error generando token" });
+    }
   });
 };
+
