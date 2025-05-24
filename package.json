@@ -1,10 +1,10 @@
 {
   "name": "book-tracker-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
       "dev": "nodemon src/index.js",
-    "start": "expo start",
+    "start": "node src/index.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
