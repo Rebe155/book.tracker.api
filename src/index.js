@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
-const routes = require("./src/routes/routes"); // corregido el require
+const routes = require("./routes/routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
